@@ -1,0 +1,6 @@
+framework module Pods_XuCalendarTests {
+  umbrella header "Pods-XuCalendarTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
