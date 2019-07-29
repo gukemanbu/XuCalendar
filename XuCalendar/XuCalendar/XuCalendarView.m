@@ -95,7 +95,6 @@
 - (XuCalendarWeekBar*)weekBar {
     if (!_weekBar) {
         _weekBar = [[XuCalendarWeekBar alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.weekBarHeight)];
-        _weekBar.backgroundColor = UIColor.clearColor;
     }
     
     return _weekBar;
@@ -117,7 +116,6 @@
 - (XuCollectionMonthView*)monthView {
     if (!_monthView) {
         _monthView = [[XuCollectionMonthView alloc] initWithFrame:self.bounds collectionViewLayout:self.monthLayout];
-        _monthView.backgroundColor = UIColor.clearColor;
         _monthView.pagingEnabled = YES;
         _monthView.contentInset = UIEdgeInsetsZero;
         _monthView.showsVerticalScrollIndicator = NO;
@@ -168,7 +166,6 @@
 - (XuCollectionWeekView*)weekView {
     if (!_weekView) {
         _weekView = [[XuCollectionWeekView alloc] initWithFrame:self.bounds collectionViewLayout:self.weekLayout];
-        _weekView.backgroundColor = UIColor.clearColor;
         _weekView.pagingEnabled = YES;
         _weekView.contentInset = UIEdgeInsetsZero;
         _weekView.showsVerticalScrollIndicator = NO;
@@ -273,6 +270,14 @@
 }
 
 #pragma mark - ui相关属性
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    
+    self.weekBar.backgroundColor = backgroundColor;
+    self.monthView.backgroundColor = backgroundColor;
+    self.weekView.backgroundColor = backgroundColor;
+}
 
 - (void)setWeekBarFont:(UIFont *)weekBarFont {
     self.weekBar.textFont = weekBarFont;
