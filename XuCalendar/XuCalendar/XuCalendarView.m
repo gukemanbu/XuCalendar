@@ -331,4 +331,28 @@
     self.weekView.dateCellPadding = dateCellPadding;
 }
 
+- (void)setMode:(XuCalendarViewMode)mode {
+    _mode = mode;
+    
+    CGFloat tmpHeight = 0;
+    CGFloat tmpTop = 0;
+
+    if (mode == XuCalendarViewModeMonth) {
+        tmpHeight = self.maxHeight;
+        tmpTop = self.weekBar.xu_height;
+    } else {
+        tmpHeight = self.minHeight;
+        tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.weekRow-1);
+        
+        self.monthView.hidden = YES;
+        self.weekView.hidden = NO;
+    }
+    
+    self.xu_height = tmpHeight;
+    self.monthView.xu_top = tmpTop;
+    
+    self.monthView.hidden = mode != XuCalendarViewModeMonth;
+    self.weekView.hidden = mode != XuCalendarViewModeWeek;
+}
+
 @end

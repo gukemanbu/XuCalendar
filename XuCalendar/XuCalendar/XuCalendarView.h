@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "XuCalendarDelegate.h"
 
+typedef NS_ENUM(NSUInteger, XuCalendarViewMode) {
+    XuCalendarViewModeMonth,
+    XuCalendarViewModeWeek
+};
+
 @interface XuCalendarView : UIView <XuCalendarUIDelegate>
 
 @property (nonatomic, strong) NSDate *selectedDate;
 @property (nonatomic, strong) UIFont *weekBarFont;
 @property (nonatomic, strong) UIColor *weekBarTextColor;
+@property (nonatomic, assign) XuCalendarViewMode mode;
 
 @property (nonatomic, weak) id<XuCalendarViewDelegate> delegate;
 @property (nonatomic, copy) void (^monthDidChanged)(NSDate*);
