@@ -23,6 +23,9 @@
     
     self.view.backgroundColor = UIColor.whiteColor;
     
+    // 这句话是必要的，否则在iOS10以下，collection顶部会有空白
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.title = @"Xucg Calendar";
     [self.view addSubview:self.calendarView];
     self.calendarView.selectedDate = [NSDate date];
@@ -54,7 +57,7 @@
         _calendarView.selectedBgColor = UIColor.redColor;
         _calendarView.dotColor = [UIColor colorWithRed:67/255.0 green:188/255.0 blue:194/255.0 alpha:1];
         _calendarView.selectedDotColor = [UIColor colorWithRed:67/255.0 green:188/255.0 blue:194/255.0 alpha:1];
-        _calendarView.mode = XuCalendarViewModeWeek;
+//        _calendarView.mode = XuCalendarViewModeWeek;
         _calendarView.delegate = self;
         
         __weak typeof(self) weakSelf = self;

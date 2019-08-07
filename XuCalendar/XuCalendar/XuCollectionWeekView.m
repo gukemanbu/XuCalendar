@@ -36,6 +36,11 @@
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
+        if (@available(iOS 10.0, *)) {
+            self.prefetchingEnabled = NO;
+        }
+        self.scrollsToTop = NO;
+        
         NSDate *today = [NSDate date];
         NSDate *preWeek = [today dateBySubtractingWeeks:1];
         NSDate *nextWeek = [today dateByAddingWeeks:1];

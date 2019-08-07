@@ -19,45 +19,44 @@
 - (void)prepareLayout {
     [super prepareLayout];
     
-    _attributesArray = @[].mutableCopy;
-    if (_pageWidth == 0) {
-        _pageWidth = [UIScreen mainScreen].bounds.size.width;
+    self.attributesArray = @[].mutableCopy;
+    if (self.pageWidth == 0) {
+        self.pageWidth = [UIScreen mainScreen].bounds.size.width;
     }
     
     NSUInteger count = [self.collectionView numberOfItemsInSection:0];
     for (NSUInteger i = 0; i<count; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
-        [_attributesArray addObject:attributes];
+        [self.attributesArray addObject:attributes];
     }
 }
 
 // 计算每个item的frame
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attribute = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     
     NSInteger index = indexPath.item;
     
-    NSInteger page = index / (_row * _column);
+    NSInteger page = index / (self.row * self.column);
     
-    // % 运算 确定 x 是 0,1,2 ... _column-1
-    CGFloat x = index % _column * (self.itemSize.width + self.minimumInteritemSpacing) + page * _pageWidth;
-    // / 运算 确定 y 是 在哪行(一行有 column 个)， % 确定在 0,1,2 ... _row-1 行内的哪行
-    CGFloat y = (index / _column % _row) * (self.itemSize.height + self.minimumLineSpacing);
+    // % 运算 确定 x 是 0,1,2 ... self.column-1
+    CGFloat x = index % self.column * (self.itemSize.width + self.minimumInteritemSpacing) + page * self.pageWidth;
+    // / 运算 确定 y 是 在哪行(一行有 column 个)， % 确定在 0,1,2 ... self.row-1 行内的哪行
+    CGFloat y = (index / self.column % self.row) * (self.itemSize.height + self.minimumLineSpacing);
     
     attribute.frame = CGRectMake(x, y, self.itemSize.width, self.itemSize.height);
-    
     return attribute;
 }
 
 // 返回所有item的frame
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
-    return _attributesArray;
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    return self.attributesArray;
 }
 
 // 返回总的可见尺寸，避免一页未排满，滑动显示不全
-- (CGSize)collectionViewContentSize{
-    int width = (int)ceil(_attributesArray.count/(_row * _column * 1.0)) * _pageWidth;
+- (CGSize)collectionViewContentSize {
+    CGFloat width = (self.attributesArray.count/(self.row * self.column)) * self.pageWidth;
     return CGSizeMake(width, 0);
 }
 

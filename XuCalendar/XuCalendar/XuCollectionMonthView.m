@@ -37,6 +37,11 @@
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
     self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
+        if (@available(iOS 10.0, *)) {
+            self.prefetchingEnabled = NO;
+        }
+        self.scrollsToTop = NO;
+        
         NSDate *today = [NSDate date];
         NSDate *preMonth = [today dateBySubtractingMonths:1];
         NSDate *nextMonth = [today dateByAddingMonths:1];
@@ -152,6 +157,10 @@
         NSDate *firstDay = [someday dateBySubtractingDays:someday.day-1];
         self.monthDidChanged(firstDay);
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"aaaaaaaaaaaaaaaaaa %f", self.contentOffset.y);
+    });
 }
 
 - (void)addPreMonthBy:(NSDate*)someday {

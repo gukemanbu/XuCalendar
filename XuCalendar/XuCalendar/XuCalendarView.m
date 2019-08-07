@@ -105,6 +105,7 @@
         _monthLayout = [[XuCollectionViewLayout alloc] init];
         _monthLayout.row = 6;
         _monthLayout.column = 7;
+        _monthLayout.sectionInset = UIEdgeInsetsZero;
         _monthLayout.minimumLineSpacing = 0;
         _monthLayout.minimumInteritemSpacing = 0;
         _monthLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -155,6 +156,7 @@
         _weekLayout = [[XuCollectionViewLayout alloc] init];
         _weekLayout.row = 1;
         _weekLayout.column = 7;
+        _weekLayout.sectionInset = UIEdgeInsetsZero;
         _weekLayout.minimumLineSpacing = 0;
         _weekLayout.minimumInteritemSpacing = 0;
         _weekLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
