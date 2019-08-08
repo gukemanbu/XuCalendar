@@ -44,6 +44,16 @@
     return 0;
 }
 
+- (UIColor*)xu_colorOfDotForDate:(NSDate*)date {
+    if ([date isToday]) {
+        return UIColor.redColor;
+    } else {
+        return UIColor.blueColor;
+    }
+    
+    return 0;
+}
+
 - (XuCalendarView*)calendarView {
     if (!_calendarView) {
         _calendarView = [[XuCalendarView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, 250)];

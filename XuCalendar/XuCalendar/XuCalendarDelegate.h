@@ -28,5 +28,6 @@
 
 @optional
 - (int)xu_numberOfDotForDate:(NSDate*)date;
+- (UIColor*)xu_colorOfDotForDate:(NSDate*)date;
 
 @end

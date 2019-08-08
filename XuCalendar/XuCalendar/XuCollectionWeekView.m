@@ -84,7 +84,6 @@
     cell.selectedBgColor = self.selectedBgColor;
     cell.dotColor = self.dotColor;
     cell.selectedDotColor = self.selectedDotColor;
-    cell.isChecked = [self.selectedDate isSameDay:curDate];
     cell.dotMarginBottom = self.dotMarginBottom;
     
     BOOL showDot = NO;
@@ -92,6 +91,16 @@
         showDot = [self.xu_delegate xu_numberOfDotForDate:curDate];
     }
     cell.showDot = showDot;
+    
+    if (showDot) {
+        if ([self.xu_delegate respondsToSelector:@selector(xu_colorOfDotForDate:)]) {
+            cell.dotColor = [self.xu_delegate xu_colorOfDotForDate:curDate];
+        } else {
+            cell.dotColor = self.dotColor;
+        }
+    }
+    
+    cell.isChecked = [self.selectedDate isSameDay:curDate];
     
     return cell;
 }

@@ -103,16 +103,24 @@
     cell.dateColor = isSameMonth ? self.dateColor : self.placeholderDateColor;
     cell.selectedDateColor = self.selectedDateColor;
     cell.selectedBgColor = self.selectedBgColor;
-    cell.dotColor = self.dotColor;
     cell.selectedDotColor = self.selectedDotColor;
-    cell.isChecked = [self.selectedDate isSameDay:curDate];
+    cell.dotMarginBottom = self.dotMarginBottom;
+    
     BOOL showDot = NO;
     if ([self.xu_delegate respondsToSelector:@selector(xu_numberOfDotForDate:)]) {
         int i = [self.xu_delegate xu_numberOfDotForDate:curDate];
         showDot = i;
     }
     cell.showDot = showDot;
-    cell.dotMarginBottom = self.dotMarginBottom;
+    if (showDot) {
+        if ([self.xu_delegate respondsToSelector:@selector(xu_colorOfDotForDate:)]) {
+            cell.dotColor = [self.xu_delegate xu_colorOfDotForDate:curDate];
+        } else {
+            cell.dotColor = self.dotColor;
+        }
+    }
+    
+    cell.isChecked = [self.selectedDate isSameDay:curDate];
     
     return cell;
 }
@@ -157,10 +165,6 @@
         NSDate *firstDay = [someday dateBySubtractingDays:someday.day-1];
         self.monthDidChanged(firstDay);
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"aaaaaaaaaaaaaaaaaa %f", self.contentOffset.y);
-    });
 }
 
 - (void)addPreMonthBy:(NSDate*)someday {
