@@ -26,8 +26,8 @@
 @property (nonatomic, strong) XuCollectionWeekView *weekView;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
 
-@property (nonatomic, strong) NSDate *weekDate; // 要停留的日期
-@property (nonatomic, assign) int weekRow;      // 要停留的行
+@property (nonatomic, strong) NSDate *stayDate; // 要停留的日期
+@property (nonatomic, assign) int stayRow;      // 要停留的行
 
 @property (nonatomic, assign) CGFloat minHeight;
 @property (nonatomic, assign) CGFloat maxHeight;
@@ -131,12 +131,12 @@
             
             // 如果此月中有选中的日期，则收起时，默认停在选中行
             if ([weakSelf.weekView.selectedDate isLaterThanOrEqualTo:firstDay] && [weakSelf.weekView.selectedDate isEarlierThanOrEqualTo:lastDay]) {
-                weakSelf.weekDate = weakSelf.weekView.selectedDate;
+                weakSelf.stayDate = weakSelf.weekView.selectedDate;
             } else {
-                weakSelf.weekDate = date;
+                weakSelf.stayDate = date;
             }
             
-            [weakSelf.weekView scrollToWeek:weakSelf.weekDate];
+            [weakSelf.weekView scrollToWeek:weakSelf.stayDate];
             
             if (weakSelf.monthDidChanged) {
                 weakSelf.monthDidChanged(date);
@@ -144,6 +144,7 @@
         };
         
         _monthView.dateDidSelected = ^(NSDate * _Nonnull date) {
+            weakSelf.stayDate = date;
             weakSelf.weekView.selectedDate = date;
         };
     }
@@ -177,7 +178,7 @@
         
         __weak typeof(self) weakSelf = self;
         _weekView.weekDidChanged = ^(NSDate * _Nonnull date) {
-            weakSelf.weekDate = date;
+            weakSelf.stayDate = date;
             [weakSelf.monthView scrollToMonth:date];
             if (weakSelf.monthDidChanged) {
                 weakSelf.monthDidChanged(date);
@@ -185,6 +186,7 @@
         };
         
         _weekView.dateDidSelected = ^(NSDate * _Nonnull date) {
+            weakSelf.stayDate = date;
             weakSelf.monthView.selectedDate = date;
         };
     }
@@ -196,9 +198,9 @@
     if (gesture.state == UIGestureRecognizerStateBegan) {
         self.originalHeight = self.xu_height;
         self.originalTop = self.monthView.xu_top;
-        self.weekRow = [self.monthView rowOfDate:self.weekDate];
+        self.stayRow = [self.monthView rowOfDate:self.stayDate];
         if (self.monthView.hidden) {
-            CGFloat tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.weekRow-1);
+            CGFloat tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.stayRow-1);
             self.monthView.xu_top = tmpTop;
         }
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
@@ -225,7 +227,7 @@
 
             self.xu_height = tmpHeight;
             
-            CGFloat tmpTop = (self.monthLayout.itemSize.height*self.weekRow + self.weekBar.xu_height) - tmpHeight;
+            CGFloat tmpTop = (self.monthLayout.itemSize.height*self.stayRow + self.weekBar.xu_height) - tmpHeight;
             if (tmpTop >= 0) {
                 self.monthView.xu_top = -tmpTop + self.weekBar.xu_height;
             }
@@ -237,7 +239,7 @@
         CGFloat tmpTop = self.weekBar.xu_height;
         if (self.isPanUp) {
             tmpHeight = self.minHeight;
-            tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.weekRow-1);
+            tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.stayRow-1);
         }
         
         [UIView animateWithDuration:0.25 animations:^{
@@ -344,7 +346,7 @@
         tmpTop = self.weekBar.xu_height;
     } else {
         tmpHeight = self.minHeight;
-        tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.weekRow-1);
+        tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.stayRow-1);
         
         self.monthView.hidden = YES;
         self.weekView.hidden = NO;
