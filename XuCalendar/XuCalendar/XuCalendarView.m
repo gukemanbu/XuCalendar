@@ -273,6 +273,41 @@
     self.weekView.xu_delegate = delegate;
 }
 
+- (void)setMode:(XuCalendarViewMode)mode {
+    _mode = mode;
+    
+    CGFloat tmpHeight = 0;
+    CGFloat tmpTop = 0;
+    
+    if (mode == XuCalendarViewModeMonth) {
+        tmpHeight = self.maxHeight;
+        tmpTop = self.weekBar.xu_height;
+    } else {
+        tmpHeight = self.minHeight;
+        tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.stayRow-1);
+        
+        self.monthView.hidden = YES;
+        self.weekView.hidden = NO;
+    }
+    
+    self.xu_height = tmpHeight;
+    self.monthView.xu_top = tmpTop;
+    
+    self.monthView.hidden = mode != XuCalendarViewModeMonth;
+    self.weekView.hidden = mode != XuCalendarViewModeWeek;
+}
+
+- (void)setDisableVerticalScroll:(BOOL)disableVerticalScroll {
+    _disableVerticalScroll = disableVerticalScroll;
+    self.panGesture.enabled = !disableVerticalScroll;
+}
+
+- (void)setDisableHorizontalScroll:(BOOL)disableHorizontalScroll {
+    _disableHorizontalScroll = disableHorizontalScroll;
+    self.weekView.scrollEnabled = !disableHorizontalScroll;
+    self.monthView.scrollEnabled = !disableHorizontalScroll;
+}
+
 #pragma mark - ui相关属性
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -333,30 +368,6 @@
 - (void)setDateCellPadding:(CGFloat)dateCellPadding {
     self.monthView.dateCellPadding = dateCellPadding;
     self.weekView.dateCellPadding = dateCellPadding;
-}
-
-- (void)setMode:(XuCalendarViewMode)mode {
-    _mode = mode;
-    
-    CGFloat tmpHeight = 0;
-    CGFloat tmpTop = 0;
-
-    if (mode == XuCalendarViewModeMonth) {
-        tmpHeight = self.maxHeight;
-        tmpTop = self.weekBar.xu_height;
-    } else {
-        tmpHeight = self.minHeight;
-        tmpTop = self.weekBar.xu_height - self.monthLayout.itemSize.height*(self.stayRow-1);
-        
-        self.monthView.hidden = YES;
-        self.weekView.hidden = NO;
-    }
-    
-    self.xu_height = tmpHeight;
-    self.monthView.xu_top = tmpTop;
-    
-    self.monthView.hidden = mode != XuCalendarViewModeMonth;
-    self.weekView.hidden = mode != XuCalendarViewModeWeek;
 }
 
 @end

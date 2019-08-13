@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, XuCalendarViewMode) {
 @property (nonatomic, strong) UIFont *weekBarFont;
 @property (nonatomic, strong) UIColor *weekBarTextColor;
 @property (nonatomic, assign) XuCalendarViewMode mode;
+@property (nonatomic, assign) BOOL disableVerticalScroll;
+@property (nonatomic, assign) BOOL disableHorizontalScroll;
 
 @property (nonatomic, weak) id<XuCalendarViewDelegate> delegate;
 @property (nonatomic, copy) void (^monthDidChanged)(NSDate*);

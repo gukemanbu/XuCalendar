@@ -68,6 +68,8 @@
         _calendarView.dotColor = [UIColor colorWithRed:67/255.0 green:188/255.0 blue:194/255.0 alpha:1];
         _calendarView.selectedDotColor = [UIColor colorWithRed:67/255.0 green:188/255.0 blue:194/255.0 alpha:1];
 //        _calendarView.mode = XuCalendarViewModeWeek;
+        _calendarView.disableVerticalScroll = YES;
+        _calendarView.disableHorizontalScroll = YES;
         _calendarView.delegate = self;
         
         __weak typeof(self) weakSelf = self;
